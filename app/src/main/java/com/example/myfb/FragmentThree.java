@@ -48,9 +48,42 @@ public class FragmentThree extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        mydb = new Mydatabase(getContext(), DB_NAME, null, DB_VERSION);
+        v1 = view.findViewById(R.id.viewAll);
+        viewAll();
     }
 
+    public void viewAll(){
 
+        Cursor rs = mydb.getAll();
+        ArrayList<String> data = new ArrayList<>();
+        ArrayAdapter<String>  adapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,data);
+        if((rs.getCount())==0){
+            showMessage("Error","Nothing Found");
+            return;
+        }
 
+        StringBuffer buffer = new StringBuffer();
+
+        while (rs.moveToNext()){
+            buffer.append("Name: "+rs.getString(1)+"\n");
+            buffer.append("Age : "+rs.getString(2)+"\n");
+            buffer.append("Mark: "+rs.getString(3)+"\n\n");
+
+        }
+        s = buffer.toString().split("\n\n");
+        for(int i=0;i<(s.length);i++){
+            data.add(s[i]);
+        }
+        v1.setAdapter(adapter);
+        //showMessage("data",""+buffer.toString());
+    }
+
+    public void showMessage(String title,String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.show();
+    }
 }

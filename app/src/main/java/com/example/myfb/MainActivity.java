@@ -38,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
-
+        tabLayout.getTabAt(Integer.parseInt("0")).setIcon(R.drawable.home1);
+        tabLayout.getTabAt(Integer.parseInt("1")).setIcon(R.drawable.search);
+        tabLayout.getTabAt(Integer.parseInt("2")).setIcon(R.drawable.all);
 
 
     }
